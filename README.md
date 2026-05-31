@@ -4,28 +4,81 @@
 
 如果你只是想看效果，不需要安装开发环境，直接运行仓库里的 Windows 版本即可。
 
-## 一分钟运行
+## 不会用 GitHub 和终端也可以运行
 
-1. 下载或克隆项目：
+如果你只是想把项目下载到电脑上运行，按下面步骤做即可。
+
+1. 打开项目网页：
+
+```text
+https://github.com/issacsmit/packaging-palletizer
+```
+
+2. 在网页右上方找到绿色的 `Code` 按钮，点击它。
+
+3. 在弹出的菜单里选择 `Download ZIP`。
+
+4. 下载完成后，找到这个压缩包：
+
+```text
+packaging-palletizer-main.zip
+```
+
+5. 右键这个压缩包，选择“全部解压缩”或“解压到当前文件夹”。
+
+6. 打开解压后的文件夹，一般名字类似：
+
+```text
+packaging-palletizer-main
+```
+
+7. 继续打开：
+
+```text
+dist
+windows
+```
+
+8. 双击运行：
+
+```text
+palletizer.exe
+```
+
+9. 程序运行后会出现一个黑色窗口。计算完成后，它会让你输入码垛号。
+
+可以输入：
+
+```text
+1
+```
+
+然后按回车，就会打开第 1 个码垛的图形窗口。关闭图形窗口后，还可以继续输入其他码垛号。输入 `0` 后按回车退出程序。
+
+如果 Windows 提示“无法确认发布者”或“Windows 已保护你的电脑”，这是因为这个程序不是商店软件。可以点击“更多信息”，再点击“仍要运行”。
+
+## 会用命令行的话
+
+也可以用 Git 克隆项目：
 
 ```bash
 git clone https://github.com/issacsmit/packaging-palletizer.git
 cd packaging-palletizer
 ```
 
-2. 打开这个目录：
+然后打开这个目录：
 
 ```text
 dist\windows
 ```
 
-3. 双击运行：
+运行：
 
 ```text
 palletizer.exe
 ```
 
-4. 程序计算完成后，会提示输入码垛号。输入 `1`、`2` 等数字可以查看对应垛型图，输入 `0` 退出。
+程序计算完成后，会提示输入码垛号。输入 `1`、`2` 等数字可以查看对应垛型图，输入 `0` 退出。
 
 ## 运行后会得到什么
 
