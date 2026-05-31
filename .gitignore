@@ -15,6 +15,16 @@ palletizer.exe
 bin/
 output/
 
+# Prebuilt release package for users who do not build from source.
+!dist/
+!dist/windows/
+!dist/windows/README.md
+!dist/windows/palletizer.exe
+!dist/windows/data/
+!dist/windows/data/materials.csv
+!dist/windows/data/orders.csv
+dist/windows/output/
+
 *.o
 *.obj
 *.ilk

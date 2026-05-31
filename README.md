@@ -65,6 +65,23 @@ build.bat
 bin\palletizer.exe
 ```
 
+## Run Without Building
+
+如果只想在 Windows 上直接运行，可以使用预构建发布包：
+
+```text
+dist\windows\palletizer.exe
+```
+
+发布包已经包含运行所需资源：
+
+```text
+dist\windows\data\materials.csv
+dist\windows\data\orders.csv
+```
+
+进入 `dist\windows` 后运行 `palletizer.exe`，输入码垛号即可查看垛型图。生成结果会写入 `dist\windows\output`。
+
 ## Run
 
 在项目根目录运行：
