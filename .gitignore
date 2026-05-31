@@ -1,0 +1,22 @@
+.obsidian/
+
+# Course brief and original attachments are kept locally only.
+要求.md
+Pasted image*.jpg
+附件*.xls
+附件*.mp4
+
+# Local delivery package generated for submission.
+源代码包/
+执行文件及资源包/
+
+# Build and runtime outputs.
+palletizer.exe
+bin/
+output/
+
+*.o
+*.obj
+*.ilk
+*.pdb
+*.tmp
