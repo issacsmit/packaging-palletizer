@@ -1,153 +1,154 @@
-# Packaging Palletizer
+# 包装码垛算法演示程序
 
-一个使用 C++17 实现的卷烟包装码垛算法示例项目。程序根据物料尺寸和来料顺序，在 `440mm x 140mm` 的二维码垛空间内按顺序生成垛型，输出码垛明细、统计结果，并提供 Win32 GDI 图形窗口查看指定码垛号。
+这个项目是一个用 C++ 写的包装码垛小程序。它会读取卷烟物料尺寸和来料顺序，自动计算每个订单应该怎么码垛，并生成结果文件。程序还可以输入码垛号，打开窗口查看对应的垛型图。
 
-## Features
+如果你只是想看效果，不需要安装开发环境，直接运行仓库里的 Windows 版本即可。
 
-- C++17 面向对象实现，不依赖第三方 C++ 库。
-- 严格按订单顺序和来料顺序处理。
-- 支持机械手一次抓取 1 条或 2 条卷烟。
-- 自动校验边界、抓取间距、订单隔离和悬空约束。
-- 输出 CSV 明细、码垛汇总和运行统计。
-- 支持输入码垛号查看垛型图。
+## 一分钟运行
 
-## Repository Layout
-
-```text
-.
-├── src/
-│   └── main.cpp            # C++ source code
-├── data/
-│   ├── materials.csv       # Material size data, UTF-8 BOM CSV
-│   └── orders.csv          # Incoming order data, UTF-8 BOM CSV
-├── build.bat               # Windows build script
-├── README.md
-└── .gitignore
-```
-
-本仓库不跟踪课程要求文档、原始附件、视频、示例图片、可执行文件和运行输出；这些内容按需保留在本地。
-
-## Clone
+1. 下载或克隆项目：
 
 ```bash
 git clone https://github.com/issacsmit/packaging-palletizer.git
 cd packaging-palletizer
 ```
 
-如果仓库是私有仓库，请先完成 GitHub 认证，例如使用 GitHub CLI：
+2. 打开这个目录：
 
-```bash
-gh auth login
+```text
+dist\windows
 ```
 
-## Build
+3. 双击运行：
 
-### Requirements
+```text
+palletizer.exe
+```
 
-- Windows
-- `g++`，例如 TDM-GCC / MinGW-w64
+4. 程序计算完成后，会提示输入码垛号。输入 `1`、`2` 等数字可以查看对应垛型图，输入 `0` 退出。
 
-确认 `g++` 可用：
+## 运行后会得到什么
+
+直接运行 `dist\windows\palletizer.exe` 后，结果会生成在：
+
+```text
+dist\windows\output
+```
+
+主要有 3 个文件：
+
+```text
+stacking_result.csv    每条烟的码垛明细
+package_summary.csv    每个码垛的汇总信息
+run_stats.txt          程序运行统计和规则校验结果
+```
+
+其中 `stacking_result.csv` 包含题目要求的核心字段，例如：
+
+- 码垛号
+- 机械手抓取顺序号
+- 订单顺序号
+- 来料顺序号
+- 卷烟名称
+- 抓取数量
+- 放置坐标和尺寸
+
+## 从源码编译
+
+如果你想修改代码或自己重新编译，需要 Windows 和 `g++`。
+
+先确认电脑上能找到 `g++`：
 
 ```bat
 g++ --version
 ```
 
-构建：
+然后在项目根目录运行：
 
 ```bat
 build.bat
 ```
 
-生成文件：
+编译成功后会生成：
 
 ```text
 bin\palletizer.exe
 ```
 
-## Run Without Building
-
-如果只想在 Windows 上直接运行，可以使用预构建发布包：
-
-```text
-dist\windows\palletizer.exe
-```
-
-发布包已经包含运行所需资源：
-
-```text
-dist\windows\data\materials.csv
-dist\windows\data\orders.csv
-```
-
-进入 `dist\windows` 后运行 `palletizer.exe`，输入码垛号即可查看垛型图。生成结果会写入 `dist\windows\output`。
-
-## Run
-
-在项目根目录运行：
+运行方式：
 
 ```bat
 bin\palletizer.exe
 ```
 
-程序会读取：
+源码编译版会读取根目录下的：
 
 ```text
 data\materials.csv
 data\orders.csv
 ```
 
-计算完成后生成：
+输出结果会生成到：
 
 ```text
-output\stacking_result.csv
-output\package_summary.csv
-output\run_stats.txt
+output
 ```
 
-随后在控制台输入码垛号即可打开垛型图窗口；关闭窗口后可继续输入其他码垛号。输入 `0` 退出。
+## 项目目录说明
 
-## Output
+```text
+.
+├── src\main.cpp                 C++ 源码
+├── data\materials.csv           物料尺寸数据
+├── data\orders.csv              来料顺序数据
+├── build.bat                    编译脚本
+├── dist\windows\palletizer.exe  可直接运行的 Windows 程序
+└── dist\windows\data            可执行程序配套数据
+```
 
-`output/stacking_result.csv` 每条烟一行，包含：
+## 程序做了什么
 
-- 码垛号
-- 码垛机械手抓取顺序号
-- 订单顺序号
-- 来料顺序号
-- 物料编号
-- 卷烟名称
-- 抓取数量
-- 组内序号
-- 坐标和宽高
+程序按照来料顺序逐条处理卷烟，不能打乱订单顺序，也不能把不同订单混到同一个包装里。
 
-`output/package_summary.csv` 每个码垛一行，包含订单号、条烟数量、抓取次数和面积利用率。
-
-`output/run_stats.txt` 包含运行时间、码垛数量、机械手抓取次数和校验结果。
-
-## Algorithm Notes
-
-程序内部使用 `0.1mm` 整数单位计算，避免浮点误差。核心策略是按来料顺序将一次抓取作为放置块进行启发式摆放：优先尝试合法的双条抓取，再退化为单条抓取；当前码垛无法继续放置时创建新的码垛。放置完成后由校验器复查硬约束。
-
-主要约束包括：
+计算时会遵守这些规则：
 
 - 码垛空间宽 `440mm`、高 `140mm`。
-- 宽度方向左右边界至少保留 `5mm`。
-- 不同次抓取在宽度方向至少间隔 `5mm`。
-- 相邻两条卷烟高度差不超过 `1mm` 时才允许一次抓取 2 条。
-- 条烟下方连续悬空宽度不超过 `20mm`。
-- 不同订单不混装。
+- 左右边界至少保留 `5mm`。
+- 机械手每次可以抓 `1` 条或 `2` 条。
+- 只有相邻两条烟高度差不超过 `1mm` 时，才允许一次抓 `2` 条。
+- 不同次抓取之间至少留 `5mm` 间距。
+- 条烟下方悬空部分不能超过 `20mm`。
+- 一个订单太多时，可以拆成多个包装。
 
-## Data Format
+## 当前样例运行结果
 
-`data/materials.csv` 字段：
+使用仓库内置数据运行后，当前结果为：
+
+```text
+物料数量: 36
+来料行数: 341
+展开条烟: 393
+码垛数量: 46
+机械手抓取次数: 336
+校验结果: 通过
+```
+
+## 数据格式
+
+`data/materials.csv` 的字段是：
 
 ```text
 物料编号,物料名称,长(0.1mm),宽(0.1mm),高(0.1mm)
 ```
 
-`data/orders.csv` 字段：
+`data/orders.csv` 的字段是：
 
 ```text
 订单顺序号,来料顺序号,物料编号,物料名称,来料数量
 ```
+
+尺寸单位是 `0.1mm`。例如 `1020` 表示 `102.0mm`。
+
+## 备注
+
+课程要求文档、原始 Excel 附件、视频、示例图片和本地提交用压缩包没有放进 GitHub 仓库。仓库里保留的是其他人运行和二次开发需要的源码、CSV 数据、构建脚本和 Windows 可执行文件。
